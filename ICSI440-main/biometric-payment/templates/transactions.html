@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Гүйлгээний түүх{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Гүйлгээний түүх</h1>
+  <table>
+    <tr><th>Огноо</th><th>Хэрэглэгч</th><th>Дүн</th><th>Арга</th><th>Төлөв</th><th>Тайлбар</th></tr>
+    {% for t in transactions %}
+    <tr>
+      <td class="muted">{{ t.created_at[:19]|replace('T', ' ') }}</td>
+      <td>{{ t.user_name or '—' }}</td>
+      <td class="num">{{ "{:,}".format(t.amount) }} ₮</td>
+      <td>{{ 'Face Pay' if t.method == 'face' else 'Гараар' }}{% if t.merchant %} <span class="muted">· {{ t.merchant }}</span>{% endif %}</td>
+      <td><span class="pill {{ 'ok' if t.status == 'SUCCESS' else 'bad' }}">{{ t.status }}</span></td>
+      <td class="muted">{% if t.match_score is not none %}match {{ '%.2f'|format(t.match_score) }}{% endif %}{% if t.liveness is not none %} · live {{ '%.2f'|format(t.liveness) }}{% endif %}{% if t.reason %} {{ t.reason }}{% endif %}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted">Гүйлгээ алга.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

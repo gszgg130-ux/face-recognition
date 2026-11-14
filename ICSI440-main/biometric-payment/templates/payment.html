@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Төлбөр хийх{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Энгийн төлбөр</h1>
+  {% if users %}
+  <form method="POST">
+    <label for="user_id">Хэрэглэгч</label>
+    <select id="user_id" name="user_id" required>
+      {% for user in users %}<option value="{{ user.id }}">{{ user.name }} — {{ "{:,}".format(user.balance) }} ₮</option>{% endfor %}
+    </select>
+    <label for="amount">Төлбөрийн дүн (₮)</label>
+    <input type="number" id="amount" name="amount" min="1" step="1" required>
+    <br><button type="submit">Төлөх</button>
+  </form>
+  {% else %}
+  <p>Одоогоор бүртгэлтэй хэрэглэгч байхгүй байна. <a href="{{ url_for('register') }}">Хэрэглэгч бүртгэх</a></p>
+  {% endif %}
+</div>
+{% endblock %}

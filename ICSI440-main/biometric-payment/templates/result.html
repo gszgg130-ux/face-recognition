@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>{{ title }}</h1>
+  <p>{{ message }}</p>
+  <a class="btn" href="{{ url_for('payment') }}">Дахин төлөх</a>
+  <a class="btn" href="{{ url_for('home') }}" style="background:#eef1f6;color:#1d2433">Нүүр хуудас</a>
+</div>
+{% endblock %}

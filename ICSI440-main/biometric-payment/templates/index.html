@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Хэрэглэгчид</h1>
+  {% if not db_ok %}<p class="pill bad">MongoDB-тэй холбогдож чадсангүй</p>{% endif %}
+  {% if users %}
+  <table>
+    <tr><th>Нэр</th><th>Үлдэгдэл</th><th>Face Pay</th><th>ПИН</th><th>Бүртгэсэн</th></tr>
+    {% for user in users %}
+    <tr>
+      <td><b>{{ user.name }}</b></td>
+      <td class="num">{{ "{:,}".format(user.balance) }} ₮</td>
+      <td>
+        {% if user.faceid.enabled %}<span class="pill ok">Идэвхтэй</span>
+        <span class="muted">{{ user.faceid.poses|length }} төрх · {{ user.faceid.source }}</span>
+        {% else %}<span class="pill no">Тохируулаагүй</span>{% endif %}
+      </td>
+      <td>{% if user.pin_locked %}<span class="pill bad">Түгжигдсэн</span>{% elif user.pin_set %}<span class="pill ok">Тохируулсан</span>{% else %}<span class="pill no">—</span>{% endif %}</td>
+      <td class="muted">{{ (user.faceid.enrolled_at or user.created_at or '')[:16]|replace('T', ' ') }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>Одоогоор бүртгэлтэй хэрэглэгч байхгүй байна. <a href="{{ url_for('register') }}">Хэрэглэгч бүртгэх</a> эсвэл <code>python seed_faces.py</code> ажиллуулна уу.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Хэрэглэгч бүртгэх{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Хэрэглэгч бүртгэх</h1>
+  <p class="muted">Нүүрээ банкны апп-ын "Face Pay тохируулах" хэсгээс бүртгүүлнэ.</p>
+  <form method="POST">
+    <label for="name">Нэр</label>
+    <input id="name" type="text" name="name" required>
+    <label for="balance">Эхний үлдэгдэл (₮)</label>
+    <input id="balance" type="number" name="balance" min="0" step="1" required>
+    <br><button type="submit">Бүртгэх</button>
+  </form>
+</div>
+{% endblock %}
